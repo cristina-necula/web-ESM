@@ -18,11 +18,324 @@
 <body>
  
     <div class="container">
-        <div class="jumbotron" style="padding-bottom:0px;">
-            <h2>Dashboard</h2>
-        </div>
         
-      </form>
+        <div class="jumbotron" style="padding-bottom:0px;">
+            <h2>ESM Tracker Web App - Define surveys and workflows</h2>
+        </div>
+
+        <!----------------------------------ANSWERS-------------------------------------------->
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h4 style="text-align: center">Answers</h4>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h5>Add new answer</h5>
+
+        <form role="form">
+            <div class="form-group row">
+                <label for="inputAnswerKey" class="col-sm-2 col-form-label">Answer Key</label>
+                <div class="col-sm-10">
+                    <input id="inputAnswerKey"
+                           ng-model="answer.key"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter key here"
+                           required=""
+                           autofocus=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputAnswerText" class="col-sm-2 col-form-label">Answer Text</label>
+                <div class="col-sm-10">
+                    <input id="inputAnswerText"
+                           ng-model="answer.text"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter text here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <button ng-click="SaveAnswer($event)"
+                    class="btn btn-primary"
+                    type="submit">
+                Save Answer
+            </button>
+        </form>
+      
+        <br/>
+
+        <h5>Existing Answers</h5>
+
+        <br/>
+
+        <table id="answer-table" class="table table-striped">
+            <thead class="thead-default">
+                <tr>
+                    <th>Answer key</th>
+                    <th>Answer text</th> 
+                </tr>
+            </thead>
+            <tbody id="answer-table-body" ng-repeat="answer in answers">
+                <td>{{answer.key}}</td>
+                <td>{{answer.text}}</td>
+            </tbody>      
+        </table>
+
+
+        <!----------------------------------SURVEYS-------------------------------------------->
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h4 style="text-align: center">Surveys</h4>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h5>Add new survey</h5>
+
+        <form role="form">
+            <div class="form-group row">
+                <label for="inputSurveyKey" class="col-sm-2 col-form-label">Survey Key</label>
+                <div class="col-sm-10">
+                    <input id="inputSurveyKey"
+                           ng-model="survey.key"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter key here"
+                           required=""
+                           autofocus=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputSurveyQuestion" class="col-sm-2 col-form-label">Survey Question</label>
+                <div class="col-sm-10">
+                    <input id="inputSurveyQuestion"
+                           ng-model="survey.question"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter survey question here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputSurveyAnswers" class="col-sm-2 col-form-label">Survey Answers</label>
+                <div class="col-sm-10">
+                    <input id="inputSurveyAnswers"
+                           ng-model="survey.answers"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter survey answers keys separated by white space"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <button ng-click="SaveSurvey($event)"
+                    class="btn btn-primary"
+                    type="submit">
+                Save Survey
+            </button>
+        </form>
+
+        <br>
+
+        <h5>Existing Surveys</h5>
+
+        <br>
+
+        <table id="survey-table" class="table table-striped">
+            <thead class="thead-default">
+            <tr>
+                <th>Survey key</th>
+                <th>Survey question</th>
+                <th>Survey answers</th>
+            </tr>
+            </thead>
+            <tbody id="survey-table-body" ng-repeat="survey in surveys">
+                <td>{{survey.key}}</td>
+                <td>{{survey.question}}</td>
+                <td>{{survey.answers}}</td>
+            </tbody>
+        </table>
+
+        <!------------------------------------TASKS---------------------------------------------->
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h4 style="text-align: center">Tasks</h4>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h5>Add new task</h5>
+
+        <form role="form">
+            <div class="form-group row">
+                <label for="inputTaskKey" class="col-sm-2 col-form-label">Task Key</label>
+                <div class="col-sm-10">
+                    <input id="inputTaskKey"
+                           ng-model="task.key"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter key here"
+                           required=""
+                           autofocus=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputTaskType" class="col-sm-2 col-form-label">Task Type</label>
+                <div class="col-sm-10">
+                    <input id="inputTaskType"
+                           ng-model="task.type"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter task type here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputTaskTag" class="col-sm-2 col-form-label">Task Tag</label>
+                <div class="col-sm-10">
+                    <input id="inputTaskTag"
+                           ng-model="task.tag"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter task tag here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputTaskContainerActivity" class="col-sm-2 col-form-label">Task Container Activity</label>
+                <div class="col-sm-10">
+                    <input id="inputTaskContainerActivity"
+                           ng-model="task.containerActivity"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter task container activity here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <button ng-click="SaveTask($event)"
+                    class="btn btn-primary"
+                    type="submit">
+                Save Task
+            </button>
+        </form>
+
+        <br>
+
+        <h5>Existing Task</h5>
+
+        <br>
+
+        <table id="task-table" class="table table-striped">
+            <thead class="thead-default">
+            <tr>
+                <th>Task key</th>
+                <th>Task type</th>
+                <th>Task tag</th>
+                <th>Task container activity</th>
+            </tr>
+            </thead>
+            <tbody id="task-table-body" ng-repeat="task in tasks">
+                <td>{{task.key}}</td>
+                <td>{{task.type}}</td>
+                <td>{{task.tag}}</td>
+                <td>{{task.containerActivity}}</td>
+            </tbody>
+        </table>
+
+        <!----------------------------------WORKFLOWS-------------------------------------------->
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h4 style="text-align: center">Workflows</h4>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h5>Add new workflow</h5>
+
+        <form role="form">
+            <div class="form-group row">
+                <label for="inputWorkflowKey" class="col-sm-2 col-form-label">Workflow Key</label>
+                <div class="col-sm-10">
+                    <input id="inputWorkflowKey"
+                           ng-model="workflow.key"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter key here"
+                           required=""
+                           autofocus=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputWorkflowSurveyKey" class="col-sm-2 col-form-label">Workflow survey</label>
+                <div class="col-sm-10">
+                    <input id="inputWorkflowSurveyKey"
+                           ng-model="workflow.survey"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter survey key here"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputWorkflowTasks" class="col-sm-2 col-form-label">Workflow tasks</label>
+                <div class="col-sm-10">
+                    <input id="inputWorkflowTasks"
+                           ng-model="workflow.tasks"
+                           type="text"
+                           class="form-control form-control-lg"
+                           placeholder="Enter task keys separated by white space"
+                           required=""
+                           ng-model-options="{ getterSetter: true }">
+                </div>
+            </div>
+
+            <button ng-click="SaveWorkflow($event)"
+                    class="btn btn-primary"
+                    type="submit">
+                Save Workflow
+            </button>
+        </form>
+
+        <br>
+
+        <h5>Existing Task</h5>
+
+        <br>
+
+        <table id="workflow-table" class="table table-striped">
+            <thead class="thead-default">
+            <tr>
+                <th>Workflow key</th>
+                <th>Workflow survey key</th>
+                <th>Workflow tasks tag</th>
+            </tr>
+            </thead>
+            <tbody id="workflow-table-body" ng-repeat="workflow in workflows">
+            <td>{{workflow.key}}</td>
+            <td>{{workflow.survey}}</td>
+            <td>{{workflow.tasks}}</td>
+            </tbody>
+        </table>
+
     </div>
    
 </body></html>

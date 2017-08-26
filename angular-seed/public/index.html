@@ -36,11 +36,12 @@
   <script src="components/version/interpolate-filter.js"></script>
   <script src="home/home.js"></script>
   <script src="dashboard/dashboard.js"></script>
+  
 
   <script>
       document.addEventListener('DOMContentLoaded', function() {
         try {
-          let app = firebase.app();
+          var app = firebase.app();
           let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
         } catch (e) {
           console.error(e);

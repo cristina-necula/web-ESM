@@ -111,6 +111,7 @@ angular.module('myApp.dashboard', ['ngRoute'])
 		var workflowJson = {};
 		workflowJson['survey'] = $scope.workflow.survey;
 		workflowJson['tasks'] = [];
+		workflowJson['hash'] = " ";
 
 		var tasks = $scope.workflow.tasks.split(" ");
 		for(var i = 0; i < tasks.length; i++){

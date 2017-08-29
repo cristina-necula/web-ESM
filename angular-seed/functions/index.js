@@ -8,14 +8,50 @@ admin.initializeApp(functions.config().firebase);
 //listen for events
 exports.triggerSurvey = functions.database.ref('/sessions/{pushId}/events')
     .onWrite(event => {
-//      const getSomethingPromise = admin.database().ref(`/important/messages/{pushId}`).once('value');
-//
-// return getSomethingPromise.then(results => {
-//     const somethingSnapshot = results[0];
 
-    // Do something with the snapshot
-// })
-        console.log(event.data.val());
+        var events = event.data.val();
+        var eventsLength = event.data.val().length;
+        var tasks = [];
+
+        for(var i = 0; i < eventsLength; i++){
+            var task = {};
+            task['type'] = events[i].type;
+            task['tag'] = events[i].tag;
+            task['containerActivity'] = events[i].containerActivityName;
+            tasks.push(task);
+        }
+
+        var userKey = "cristinanecula-af757a33466c8452";
+
+        for(var i = 0; i < eventsLength; i++) {
+            var eventsSlice = tasks.slice(i, eventsLength);
+            var eventsHash = hash(eventsSlice);
+            admin.database().ref('/workflowsHash/' + eventsHash).once('value').then(snapshot => {
+
+                if(snapshot !== null && snapshot.val() !== null){
+                    var payload = {
+                        data: {
+                            survey: snapshot.val().surveyKey,
+                            workflow: snapshot.val().workflowKey
+                        }
+                    };
+
+                    admin.database().ref('/users/' + userKey).once('value').then(data => {
+                       var token = data.val().token;
+                        return admin.messaging().sendToDevice(token, payload)
+                            .then(function(response) {
+                                console.log("Successfully sent message:", response);
+                            })
+                            .catch(function(error) {
+                                console.log("Error sending message:", error);
+                            });
+                    });
+
+
+                }
+            });
+        }
+        return;
     });
 
 exports.calculateWorkflowHash = functions.database.ref('/workflows/{pushId}')
@@ -25,26 +61,13 @@ exports.calculateWorkflowHash = functions.database.ref('/workflows/{pushId}')
             return
         }
 
-        if(event.data.val().hash !== " "){
-            return
-        }
+        var hashString = hash(event.data.val().tasks)
+        console.log("web hash: " + hashString);
 
-        var tasksKeys = Object.keys(event.data.val().tasks);
-        var tasksLength = tasksKeys.length;
-        var tasks = [];
+        var json = {};
+        json['surveyKey'] = event.data.val().survey;
+        json['workflowKey'] = event.data.key;
 
-        for(var i = 0; i < tasksLength; i++){
-            var key = tasksKeys[i].replace("\"", "");
-            var task = {};
-            admin.database().ref('/tasks/' + key).once('value').then(snapshot => {
-                task['type'] = snapshot.val().type;
-                task['tag'] = snapshot.val().tag;
-                task['containerActivity'] = snapshot.val().containerActivity;
-            });
-            tasks.push(task);
-            console.log("Task " + i + " " + tasks[i]);
-        }
-        console.log("Tasks: " + tasks);
-        var workflowTasksHash = hash(tasks);
-        return event.data.ref.child('hash').set(workflowTasksHash);
+        return event.data.ref.parent.ref.parent.child(`/workflowsHash/${hashString}`)
+                .set(json);
     });

@@ -115,7 +115,9 @@ angular.module('myApp.dashboard', ['ngRoute'])
 
 		var tasks = $scope.workflow.tasks.split(" ");
 		for(var i = 0; i < tasks.length; i++){
-			workflowJson['tasks'][tasks[i]] = true;
+			var task = firebase.database().ref('tasks/'+tasks[i]).on('value', function (snapshot) {
+                workflowJson['tasks'][i] = snapshot.val();
+            });
 		}
 
 		var workflowKey = $scope.workflow.key;

@@ -4,7 +4,8 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.home',
-  'myApp.dashboard'
+  'myApp.dashboard',
+  'myApp.analytics'
 ]).
 
 config(['$routeProvider', function($routeProvider) {
@@ -13,6 +14,10 @@ config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/dashboard', {
         templateUrl: 'dashboard/dashboard.html',
         controller: 'DashboardController'
+    });
+    $routeProvider.when('/analytics', {
+        templateUrl: 'analytics/analytics.html',
+        controller: 'AnalyticsController'
     });
     $routeProvider.otherwise({
      	redirectTo:'/home'

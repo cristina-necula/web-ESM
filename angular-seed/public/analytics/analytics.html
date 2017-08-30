@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+ 
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+      <title>ESM Tracker</title>
+   
+      <link 
+          rel="stylesheet" 
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+          crossorigin="anonymous">
+
+   
+  </head>
+ 
+  <body>
+ 
+    <div class="container">
+        
+        <div class="jumbotron" style="padding-bottom:0px;">
+            <h2>ESM Tracker Web App View - Sessions</h2>
+        </div>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <h4 style="text-align: center">Sessions</h4>
+
+        <hr style="height: 10px; border: 0;box-shadow: 0 10px 10px -10px #8c8b8b inset;">
+
+        <table class="table">
+            <thead class="thead-default">
+                <tr>
+                  <th>#</th>
+                  <th>Start time</th>
+                  <th>End time</th> 
+                  <th>Total time</th>
+                  <th>Events</th> 
+                </tr>
+            </thead>
+            <tbody ng-repeat="session in sessions">
+              <td>{{$index + 1}}</td>
+              <td>{{session.startTime}}</td>
+              <td>{{session.endTime}}</td>
+              <td>{{session.totalTime}}</td>
+              <td>
+                  <table class="table">
+                    <thead class="thead-default">
+                      <tr>
+                        <th>#</th>
+                        <th>Timestamp</th>
+                        <th>Is Error</th> 
+                        <th>Container Activity</th>
+                        <th>Type</th> 
+                        <th>Tag</th>
+                        <th>Location</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="event in session.events">
+                      <td>{{$index + 1}}</td>
+                      <td>{{event.timestamp}}</td>
+                      <td>{{event.error}}</td> 
+                      <td>{{event.containerActivityName}}</td>
+                      <td>{{event.type}}</td> 
+                      <td>{{event.location.name}}</td>
+                    </tbody>
+                  </table>
+              </td>
+            </tbody>      
+        </table>
+    </div>
+  </body>
+</html>

@@ -41,7 +41,7 @@ angular.module('myApp.analytics', ['ngRoute'])
 			var formattedDate = moment(date).format('DD/MM/YYYY HH:mm:ss');
 			events[i].timestamp = formattedDate;
 
-			if(events[i].error === 'undefined'){
+			if(typeof(events[i].error) == 'undefined'){
 				events[i].error = false;
 			}
 		}

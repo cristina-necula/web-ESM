@@ -30,7 +30,8 @@ angular.module('myApp.analytics', ['ngRoute'])
 		endDate.setSeconds(endTime / 1000);
 		var formattedEndtDate = moment(endDate).format('DD/MM/YYYY HH:mm:ss');
 
-		var totalTime = (endTime - data.val().startTime) / 1000;
+		var totalTime = (((endTime - data.val().startTime) / 1000) / 60);
+		var formattedTotalTime = parseFloat(Math.round(totalTime * 100) / 100).toFixed(2);
 
 		var events = data.val().events;
 		for(var i = 0; i < events.length; i++){
@@ -48,7 +49,7 @@ angular.module('myApp.analytics', ['ngRoute'])
 		$scope.sessions.push({
 			'startTime': formattedStartDate,
 			'endTime': formattedEndtDate,
-			'totalTime': totalTime,
+			'totalTime': formattedTotalTime,
 			'events': events
 		});
 

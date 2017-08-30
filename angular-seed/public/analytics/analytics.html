@@ -11,8 +11,6 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
           crossorigin="anonymous">
-
-   
   </head>
  
   <body>
@@ -35,7 +33,7 @@
                   <th>#</th>
                   <th>Start time</th>
                   <th>End time</th> 
-                  <th>Total time</th>
+                  <th>Total time (m)</th>
                   <th>Events</th> 
                 </tr>
             </thead>
@@ -63,6 +61,7 @@
                       <td>{{event.error}}</td> 
                       <td>{{event.containerActivityName}}</td>
                       <td>{{event.type}}</td> 
+                      <td>{{event.tag}}</td> 
                       <td>{{event.location.name}}</td>
                     </tbody>
                   </table>
